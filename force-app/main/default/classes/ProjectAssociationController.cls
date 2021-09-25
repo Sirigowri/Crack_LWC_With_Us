@@ -52,9 +52,4 @@ public with sharing class ProjectAssociationController{
             return null;
         }
     }
-    /*public class ProjectDetails{
-        @auraEnabled public String projectName{get; set;}
-        @auraEnabled public String accountName{get; set;}
-        @auraEnabled public String clientName{get; set;}
-    }*/
 }
