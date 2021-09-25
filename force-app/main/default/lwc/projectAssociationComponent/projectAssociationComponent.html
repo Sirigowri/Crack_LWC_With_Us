@@ -1,0 +1,162 @@
+<template>
+    <div class="slds-theme_default">
+        <lightning-input 
+            type="search" 
+            value={strSearchEmpName} 
+            onchange={handleEmployeeName} 
+            placeholder="Search Employee"
+            class="inputStyle">
+        </lightning-input>
+        <br/>
+
+        <!--Datatable Component-->
+        
+        <lightning-datatable 
+                    key-field="Id" 
+                    data={data} 
+                    columns={columns}>
+        </lightning-datatable>
+
+        <div class="slds-m-around_medium">
+            <!--calling child paginator component-->
+            <c-paginator 
+                onprevious={previousHandler} 
+                onnext={nextHandler}>
+            </c-paginator>
+
+            <div class="slds-align_absolute-center">
+                        Displaying {startingRecord} to 
+                                {endingRecord} of 
+                                {totalRecountCount} records.
+                        Page {page} of {totalPage}.
+            </div>
+        </div>
+
+        <!--Footer Component-->
+        <div class="slds-p-top_small">
+            <div class="modal-footer slds-modal__footer slds-size_1-of-1">
+                    <lightning-button 
+                            variant="brand" 
+                            onclick={handleSelect} 
+                            value="Config" label="Select">
+                    </lightning-button>
+            </div>
+        </div>
+        <!-- child component generic modal start -->        
+        <template if:true={openModal}>
+            <c-generic-modal-component onclose={closeModal}>
+                <div slot="spinner">
+                    <lightning-messages>
+                    </lightning-messages> 
+                    <template if:false={isLoaded}>
+                        <lightning-spinner
+                            alternative-text="Loading..." variant="brand">
+                        </lightning-spinner>
+                    </template>
+                </div>  
+                <h1 slot="title">Project Association Details</h1>
+                <!-- modal body start -->
+                <lightning-layout horizontal-align="space">
+                    <lightning-layout-item size="1">   
+                        
+                    </lightning-layout-item>  
+                    <lightning-layout-item size="11">      
+                        <div class="slds-m-top_small">
+                            <div class="slds-m-left_xx-small">
+                                    <div>
+                                            <p class="pstyle">Account Name</p>
+                
+                                    </div>
+                                    <div>
+                                            {projectDetails.Account__r.Name}
+                                    </div>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout horizontal-align="space">
+                    <lightning-layout-item size="1">   
+                        
+                    </lightning-layout-item> 
+                    <lightning-layout-item size="11">   
+                        <div class="slds-m-top_small">
+                            <div class="slds-m-left_xx-small">
+                                    <div>
+                                            <p class="pstyle">Project Name</p>
+                
+                                    </div>
+                                    <div>
+                                            {projectDetails.Name}
+                                    </div>
+                            </div>
+                        </div> 
+                    </lightning-layout-item>
+                </lightning-layout> 
+                <lightning-layout horizontal-align="space">
+                    <lightning-layout-item size="1">   
+                        
+                    </lightning-layout-item> 
+                    <lightning-layout-item size="11">   
+                        <div class="slds-m-top_small">
+                            <div class="slds-m-left_xx-small">
+                                    <div>
+                                            <p class="pstyle">Client Name</p>
+                
+                                    </div>
+                                    <div>
+                                            {projectDetails.Client__r.Name}
+                                    </div>
+                            </div>
+                        </div> 
+                    </lightning-layout-item>
+                </lightning-layout>                 
+                <lightning-layout horizontal-align="space">
+                    <lightning-layout-item size="1">                        
+                    </lightning-layout-item>
+                    <lightning-layout-item size="4">
+                        <lightning-input type="date" name="startDate" value={startDate} label="Start Date" date-style="short" class="dateCmp"
+                            required message-when-bad-input={baddateinputmessage} onchange={updateSearchkey}></lightning-input>
+                    </lightning-layout-item> 
+                    <lightning-layout-item size="2"></lightning-layout-item>  
+                    <lightning-layout-item size="4">    
+                        <lightning-input type="date" name="endDate" value={endDate} label="End Date" date-style="short" class="dateCmp"
+                            message-when-bad-input={baddateinputmessage} onchange={updateSearchkey}></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="1"></lightning-layout-item>    
+                </lightning-layout>
+                <lightning-layout horizontal-align="space">
+                    <lightning-layout-item size="1"> 
+                    </lightning-layout-item>
+                    <lightning-layout-item size="10">      
+                        <lightning-textarea name="reason" value="" 
+                        placeholder="Enter your reason here.." 
+                        label="Mapping Reason" maxlength="140" 
+                        message-when-too-long="A maximum of 140 characters are allowed" 
+                        onchange={updateSearchkey}></lightning-textarea>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="1"> 
+                    </lightning-layout-item>
+                </lightning-layout>
+                
+                <!--modal body ends here-->
+                <!-- modal footer start-->
+                <div slot="footer">
+                    <div class="slds-align_absolute-center">
+                    <!-- modal footer start-->
+                        <lightning-button 
+                                variant="neutral" 
+                                onclick={closeModal} 
+                                value="Cancel" label="Cancel">
+                        </lightning-button>
+                        &nbsp; &nbsp;
+                        <lightning-button 
+                                variant="brand" 
+                                onclick={clickModal} 
+                                value="SubmitFeedback" label="Submit">
+                        </lightning-button>
+                    </div>
+                </div>    
+            </c-generic-modal-component>
+        </template>    
+    </div>
+</template>

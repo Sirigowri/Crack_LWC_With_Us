@@ -1,0 +1,22 @@
+<template>
+    <header><h1>Project Association</h1></header>
+    <lightning-record-edit-form
+        object-api-name= 'Project_Association__c' onsuccess={handleSuccess}>
+        <lightning-input-field
+            field-name='Employee__c'>
+        </lightning-input-field>
+        <lightning-input-field
+            field-name='Project__c' value={recordId} disabled>
+        </lightning-input-field>
+        <lightning-input-field
+            field-name='Active__c'>
+        </lightning-input-field>
+        <div class="slds-var-m-top_medium">
+            <lightning-button
+                variant="brand"
+                type="submit"
+                label="Save">
+            </lightning-button>
+        </div>
+    </lightning-record-edit-form>     
+</template>
